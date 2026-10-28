@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Live Tracker Wireframe</title>
+  <!-- Google Fonts: Mulish -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,900;1,500;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* DESIGN TOKENS */
+    :root {
+      /* Colors */
+      --color-night: #1E1E1E;
+      --color-shadow: #4A4A4A;
+      --color-pebble: #8C8C8C;
+      --color-mist: #D1D5DB;
+      --color-cloud: #F3F4F6;
+      --color-white: #FFFFFF;
+
+      /* Font Families */
+      --font-family-primary: 'Mulish', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-family-secondary: 'Avenir', 'Mulish', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Typography Tokens */
+      --specialty1-l: 900 80px/96px var(--font-family-primary);
+      --specialty1-s: 900 56px/72px var(--font-family-primary);
+      --specialty2-l: 900 64px/80px var(--font-family-primary);
+      --specialty2-s: 900 38px/54px var(--font-family-primary);
+
+      --h1-l: 700 48px/64px var(--font-family-primary);
+      --h1-s: 700 40px/50px var(--font-family-primary);
+      --h2-l: 700 36px/48px var(--font-family-primary);
+      --h2-s: 700 32px/42px var(--font-family-primary);
+      --h3-l: 700 32px/42px var(--font-family-primary);
+      --h3-s: 400 28px/36px var(--font-family-secondary);
+      --h4-l: 700 24px/32px var(--font-family-primary);
+      --h4-s: 700 20px/28px var(--font-family-primary);
+      --h5-l: 700 20px/28px var(--font-family-primary);
+      --h5-s: 400 18px/24px var(--font-family-secondary);
+      --h6-l: 700 18px/24px var(--font-family-primary);
+      --h6-s: 700 16px/20px var(--font-family-primary);
+
+      --intro-l: italic 500 24px/32px var(--font-family-primary);
+      --intro-s: italic 500 20px/28px var(--font-family-primary);
+      --body-l: 400 20px/34px var(--font-family-primary);
+      --body-m: 400 18px/26px var(--font-family-primary);
+      --body-s: 400 16px/24px var(--font-family-primary);
+      --caption: italic 700 16px/24px var(--font-family-primary);
+      --button-l: 700 20px/20px var(--font-family-primary);
+      --button-s: 700 16px/16px var(--font-family-primary);
+      --quote-text: 900 28px/38px var(--font-family-primary);
+      --subhead-l: 600 24px/32px var(--font-family-primary);
+      --subhead-s: 600 20px/28px var(--font-family-primary);
+      --overline-l: 700 16px/16px var(--font-family-primary);
+      --overline-s: 700 14px/14px var(--font-family-primary);
+      --numeral-l: 900 100px/100px var(--font-family-primary);
+      --numeral-s: 900 48px/48px var(--font-family-primary);
+      --menu-primary: 700 16px/16px var(--font-family-primary);
+      --menu-audience: 500 16px/16px var(--font-family-primary);
+      --text-link: 400 24px/36px var(--font-family-primary);
+      --field-text: 500 20px/20px var(--font-family-primary);
+      --footer-links: 500 14px/14px var(--font-family-primary);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--color-cloud);
+      color: var(--color-night);
+      font-family: var(--font-family-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP TEST BENCH CONTROLLER */
+    .viewport-control-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--color-night);
+      color: var(--color-white);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--color-pebble);
+    }
+
+    .viewport-control-bar .tagline {
+      font: var(--overline-l);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-mist);
+    }
+
+    .viewport-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-toggle-view {
+      font: var(--button-s);
+      text-transform: uppercase;
+      background-color: transparent;
+      color: var(--color-white);
+      border: 1px solid var(--color-mist);
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-toggle-view:hover {
+      background-color: var(--color-shadow);
+    }
+
+    .btn-toggle-view.active {
+      background-color: var(--color-white);
+      color: var(--color-night);
+    }
+
+    /* VIEW CONTAINERS WRAPPER */
+    .viewport-canvas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 64px;
+      padding: 40px 0 100px;
+    }
+
+    .viewport-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .viewport-label-indicator {
+      font: var(--overline-l);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-shadow);
+      margin-bottom: 16px;
+      padding: 6px 16px;
+      background-color: var(--color-mist);
+      border: 1px solid var(--color-pebble);
+    }
+
+    /* DESKTOP VIEWPORT SPEC: 1536px centered, margin 88px, 12 cols, gutter 16px */
+    .desktop-frame {
+      width: 1536px;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-pebble);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      position: relative;
+    }
+
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 16px;
+      padding: 0 88px;
+    }
+
+    /* MOBILE VIEWPORT SPEC: 390px centered, margin 17px, 4 cols, gutter 16px */
+    .mobile-frame {
+      width: 390px;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-pebble);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mobile-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 16px;
+      padding: 0 17px;
+    }
+
+    /* COMMON WIREFRAME COMPONENT STYLES */
+    .wireframe-border {
+      border: 1px solid var(--color-mist);
+    }
+
+    .wireframe-border-dark {
+      border: 1px solid var(--color-pebble);
+    }
+
+    /* MEDIA PLACEHOLDER BOXES */
+    .media-placeholder {
+      background-color: var(--color-cloud);
+      border: 1px dashed var(--color-pebble);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .media-placeholder::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top right, transparent calc(50% - 0.5px), var(--color-mist) 50%, transparent calc(50% + 0.5px)),
+                  linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--color-mist) 50%, transparent calc(50% + 0.5px));
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .media-badge {
+      background-color: var(--color-night);
+      color: var(--color-white);
+      font: var(--overline-s);
+      letter-spacing: 2px;
+      padding: 4px 8px;
+      z-index: 1;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .media-ratio-text {
+      font: var(--caption);
+      color: var(--color-shadow);
+      z-index: 1;
+    }
+
+    /* VIDEO ACCESSIBILITY WRAPPER */
+    .video-controls-overlay {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      z-index: 2;
+      display: flex;
+      gap: 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 4px 8px;
+      border: 1px solid var(--color-night);
+    }
+
+    .btn-video-control {
+      font: var(--button-s);
+      background-color: var(--color-night);
+      color: var(--color-white);
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .btn-video-control:hover {
+      background-color: var(--color-shadow);
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      font: var(--button-l);
+      background-color: var(--color-night);
+      color: var(--color-white);
+      border: 1px solid var(--color-night);
+      padding: 16px 24px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-shadow);
+      border-color: var(--color-shadow);
+    }
+
+    .btn-primary:focus {
+      outline: 2px solid var(--color-night);
+      outline-offset: 3px;
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      font: var(--button-s);
+      background-color: var(--color-white);
+      color: var(--color-night);
+      border: 1px solid var(--color-pebble);
+      padding: 10px 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: capitalize;
+      transition: all 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-cloud);
+      border-color: var(--color-night);
+    }
+
+    .btn-secondary:focus {
+      outline: 2px solid var(--color-night);
+      outline-offset: 2px;
+    }
+
+    .btn-secondary:active {
+      transform: translateY(1px);
+    }
+
+    /* INPUT FORMS */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font: var(--overline-s);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-shadow);
+    }
+
+    .wireframe-input, .wireframe-textarea, .wireframe-select {
+      font: var(--field-text);
+      color: var(--color-night);
+      background-color: var(--color-white);
+      border: 1px solid var(--color-pebble);
+      padding: 12px 16px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .wireframe-input:focus, .wireframe-textarea:focus, .wireframe-select:focus {
+      border-color: var(--color-night);
+      box-shadow: inset 0 0 0 1px var(--color-night);
+    }
+
+    .wireframe-input.state-error {
+      border-color: #991B1B;
+    }
+
+    .form-error-feedback {
+      font: var(--caption);
+      color: #991B1B;
+      display: none;
+    }
+
+    .form-error-feedback.visible {
+      display: block;
+    }
+
+    /* PROGRESS BAR SYSTEM */
+    .progress-system-card {
+      background-color: var(--color-cloud);
+      border: 1px solid var(--color-mist);
+      padding: 24px;
+      margin: 32px 0;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background-color: var(--color-mist);
+      position: relative;
+      border: 1px solid var(--color-pebble);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--color-night);
+      width: 65%;
+      transition: width 0.3s ease;
+    }
+
+    .milestone-stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      position: relative;
+    }
+
+    .milestone-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      text-align: center;
+      width: 120px;
+    }
+
+    .milestone-node {
+      width: 20px;
+      height: 20px;
+      background-color: var(--color-white);
+      border: 3px solid var(--color-night);
+      margin-bottom: 6px;
+    }
+
+    .milestone-step.completed .milestone-node {
+      background-color: var(--color-night);
+    }
+
+    .milestone-step.current .milestone-node {
+      background-color: var(--color-pebble);
+      outline: 3px solid var(--color-night);
+    }
+
+    .milestone-label {
+      font: var(--overline-s);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-night);
+    }
+
+    .milestone-date {
+      font: var(--footer-links);
+      color: var(--color-shadow);
+    }
+
+    /* MAP CONTAINER */
+    .map-wireframe {
+      width: 100%;
+      height: 480px;
+      background-color: var(--color-cloud);
+      border: 1px solid var(--color-pebble);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, var(--color-mist) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--color-mist) 1px, transparent 1px);
+    }
+
+    .map-pin {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-night);
+      border: 2px solid var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font: var(--overline-s);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease;
+    }
+
+    .map-pin:hover, .map-pin.active {
+      transform: translate(-50%, -50%) scale(1.3);
+      background-color: var(--color-shadow);
+      box-shadow: 0 0 0 4px var(--color-mist);
+    }
+
+    .map-pin.current-location {
+      background-color: var(--color-night);
+      box-shadow: 0 0 0 6px var(--color-pebble);
+      animation: pulse-pin 1.8s infinite;
+    }
+
+    @keyframes pulse-pin {
+      0% { box-shadow: 0 0 0 0 rgba(30,30,30, 0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(30,30,30, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(30,30,30, 0); }
+    }
+
+    .map-hud-overlay {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-night);
+      padding: 12px 16px;
+      max-width: 320px;
+      z-index: 3;
+    }
+
+    /* CAROUSEL / PHOTO GALLERY */
+    .photo-gallery-carousel {
+      position: relative;
+      margin: 24px 0;
+    }
+
+    .carousel-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .carousel-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    /* ATTRACTION LIST & PILLS */
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-pill {
+      font: var(--button-s);
+      padding: 8px 14px;
+      background-color: var(--color-cloud);
+      border: 1px solid var(--color-mist);
+      cursor: pointer;
+    }
+
+    .filter-pill.active {
+      background-color: var(--color-night);
+      color: var(--color-white);
+      border-color: var(--color-night);
+    }
+
+    .attraction-card {
+      background-color: var(--color-white);
+      border: 1px solid var(--color-mist);
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .status-tag {
+      font: var(--overline-s);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--color-pebble);
+    }
+
+    .status-tag.visited {
+      background-color: var(--color-cloud);
+      color: var(--color-night);
+    }
+
+    .status-tag.planned {
+      background-color: var(--color-white);
+      border-style: dashed;
+      color: var(--color-shadow);
+    }
+
+    /* OVERLAY / MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(30, 30, 30, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-dialog {
+      background-color: var(--color-white);
+      border: 2px solid var(--color-night);
+      width: 720px;
+      max-width: 90vw;
+      padding: 32px;
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font: var(--button-s);
+      background: none;
+      border: 1px solid var(--color-night);
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    /* DESKTOP HEADER & HORIZONTAL NAVIGATION */
+    .desktop-header {
+      border-bottom: 1px solid var(--color-mist);
+      padding: 24px 0;
+    }
+
+    .desktop-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font: var(--h3-l);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav-links-desktop {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-item-link {
+      font: var(--menu-primary);
+      text-decoration: none;
+      color: var(--color-night);
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav-item-link:hover {
+      color: var(--color-shadow);
+      border-bottom: 2px solid var(--color-night);
+    }
+
+    .nav-item-dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-pebble);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 220px;
+      list-style: none;
+      display: none;
+      padding: 8px 0;
+      z-index: 10;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-menu li a {
+      display: block;
+      padding: 8px 16px;
+      font: var(--body-s);
+      color: var(--color-night);
+      text-decoration: none;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: var(--color-cloud);
+    }
+
+    /* MOBILE NAVIGATION DRAWER */
+    .mobile-header {
+      border-bottom: 1px solid var(--color-mist);
+      padding: 16px 0;
+    }
+
+    .mobile-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hamburger-btn {
+      width: 36px;
+      height: 36px;
+      background-color: var(--color-cloud);
+      border: 1px solid var(--color-pebble);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .hamburger-bar {
+      width: 20px;
+      height: 2px;
+      background-color: var(--color-night);
+    }
+
+    .mobile-nav-drawer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-white);
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease-in-out;
+      padding: 24px 17px;
+    }
+
+    .mobile-nav-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--color-mist);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .drawer-links a {
+      font: var(--subhead-s);
+      color: var(--color-night);
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    .wireframe-footer {
+      border-top: 1px solid var(--color-mist);
+      background-color: var(--color-cloud);
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links-list {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links-list a {
+      font: var(--footer-links);
+      color: var(--color-shadow);
+      text-decoration: none;
+    }
+
+    .footer-links-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* SUBMISSION TOAST */
+    .submission-feedback {
+      background-color: var(--color-night);
+      color: var(--color-white);
+      padding: 16px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .submission-feedback.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VIEWPORT INTERACTIVE CONTROL BAR -->
+  <aside class="viewport-control-bar" aria-label="Viewport Controls">
+    <div>
+      <div class="tagline">Vacation Tracker Interactive Wireframe System</div>
+      <div style="font: var(--caption); color: var(--color-mist);">Compliant with 1536px / 390px responsive token specifications</div>
+    </div>
+    <div class="viewport-buttons">
+      <button class="btn-toggle-view active" onclick="switchView('both')">View Both Devices</button>
+      <button class="btn-toggle-view" onclick="switchView('desktop')">Desktop (1536px)</button>
+      <button class="btn-toggle-view" onclick="switchView('mobile')">Mobile (390px)</button>
+      <button class="btn-toggle-view" onclick="toggleModal(true)">Open Modal State</button>
+    </div>
+  </aside>
+
+  <main class="viewport-canvas">
+
+    <!-- ========================================== -->
+    <!-- 1. DESKTOP VIEWPORT (1536px, 12 COLUMNS)   -->
+    <!-- ========================================== -->
+    <div class="viewport-section" id="section-desktop">
+      <div class="viewport-label-indicator">Viewport Specification: Desktop (1536px) | 12-Column Grid | 88px Margin</div>
+
+      <div class="desktop-frame">
+        <!-- DESKTOP HEADER & FULL HORIZONTAL NAV (No hamburger) -->
+        <header class="desktop-header">
+          <div class="desktop-grid">
+            <nav class="desktop-nav" style="grid-column: span 12;" aria-label="Desktop Primary Navigation">
+              <div class="nav-brand">TripTracker // LIVE</div>
+              <ul class="nav-links-desktop">
+                <li><a href="#d-progress" class="nav-item-link">Trip Progress</a></li>
+                <li><a href="#d-map" class="nav-item-link">Current Map</a></li>
+                <li><a href="#d-photos" class="nav-item-link">Key Photos</a></li>
+                <li><a href="#d-attractions" class="nav-item-link">Attractions</a></li>
+                <li><a href="#d-suggestions" class="nav-item-link">Leave Suggestion</a></li>
+                <li class="nav-item-dropdown" onclick="toggleDropdown()">
+                  <span class="nav-item-link">Trip Actions ▾</span>
+                  <ul class="dropdown-menu" id="desktopDropdownMenu">
+                    <li><a href="#download">Download Itinerary (PDF)</a></li>
+                    <li><a href="#share">Share Tracker Link</a></li>
+                    <li><a href="#subscribe">Follow via SMS Alerts</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <div>
+                <a href="#d-suggestions" class="btn-primary" style="padding: 8px 16px; font: var(--button-s);">Submit Suggestion</a>
+              </div>
+            </nav>
+          </div>
+        </header>
+
+        <!-- DESKTOP HERO & TRAVELER PROFILE -->
+        <section style="padding: 48px 0 24px;" aria-labelledby="desktop-hero-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 8;">
+              <span style="font: var(--overline-l); color: var(--color-shadow); display: block; margin-bottom: 8px;">OVERLINE_L Live Vacation Coordinates: Japan Expedition 2026</span>
+              <h1 id="desktop-hero-title" style="font: var(--h1-l); color: var(--color-night); margin-bottom: 16px;">H1_L Tracking Taylor’s 14-Day Cross-Country Trek</h1>
+              <p style="font: var(--intro-l); color: var(--color-shadow);">Intro_L Taylor is currently on Day 9 exploring ancient temples, coastal railways, and mountain passes across Japan.</p>
+            </div>
+            <div style="grid-column: span 4; display: flex; flex-direction: column; justify-content: center; background-color: var(--color-cloud); padding: 24px; border: 1px solid var(--color-mist);">
+              <span style="font: var(--overline-s); color: var(--color-shadow);">OVERLINE_S CURRENT STATUS</span>
+              <div style="display: flex; align-items: baseline; gap: 8px; margin: 8px 0;">
+                <span style="font: var(--numeral-s);">09</span>
+                <span style="font: var(--subhead-l);">/ 14 Days Active</span>
+              </div>
+              <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Last satellite ping: 12 minutes ago from Kyoto Central District.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP TRIP PROGRESS BAR MODULE -->
+        <section id="d-progress" style="padding: 16px 0;" aria-labelledby="desktop-progress-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 12;">
+              <div class="progress-system-card">
+                <div class="progress-header">
+                  <div>
+                    <span style="font: var(--overline-l); color: var(--color-shadow);">OVERLINE_L ITINERARY STATUS</span>
+                    <h2 id="desktop-progress-title" style="font: var(--h2-l); margin-top: 4px;">H2_L Trip Progress Bar & Milestone Status</h2>
+                  </div>
+                  <div style="text-align: right;">
+                    <span style="font: var(--numeral-s);" id="desktopProgressPercent">64%</span>
+                    <div style="font: var(--caption); color: var(--color-shadow);">Caption 9 of 14 Days Finished (18 of 28 Attractions)</div>
+                  </div>
+                </div>
+
+                <!-- PROGRESS BAR -->
+                <div class="progress-track" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-fill" id="desktopProgressBar"></div>
+                </div>
+
+                <!-- STEPPER / MILESTONES -->
+                <div class="milestone-stepper">
+                  <div class="milestone-step completed" onclick="setTripProgress(15, 'Tokyo Arrival')">
+                    <div class="milestone-node"></div>
+                    <span class="milestone-label">Tokyo</span>
+                    <span class="milestone-date">Day 1-3 (Passed)</span>
+                  </div>
+                  <div class="milestone-step completed" onclick="setTripProgress(40, 'Mount Fuji Hike')">
+                    <div class="milestone-node"></div>
+                    <span class="milestone-label">Mount Fuji</span>
+                    <span class="milestone-date">Day 4-6 (Passed)</span>
+                  </div>
+                  <div class="milestone-step current" onclick="setTripProgress(64, 'Kyoto Temples')">
+                    <div class="milestone-node"></div>
+                    <span class="milestone-label">Kyoto</span>
+                    <span class="milestone-date">Day 7-10 (Current)</span>
+                  </div>
+                  <div class="milestone-step" onclick="setTripProgress(85, 'Osaka Street Food')">
+                    <div class="milestone-node"></div>
+                    <span class="milestone-label">Osaka</span>
+                    <span class="milestone-date">Day 11-12 (Upcoming)</span>
+                  </div>
+                  <div class="milestone-step" onclick="setTripProgress(100, 'Tokyo Return Flight')">
+                    <div class="milestone-node"></div>
+                    <span class="milestone-label">Departure</span>
+                    <span class="milestone-date">Day 13-14 (Upcoming)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP INTERACTIVE MAP SECTION -->
+        <section id="d-map" style="padding: 32px 0;" aria-labelledby="desktop-map-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 12; margin-bottom: 16px;">
+              <span style="font: var(--overline-l); color: var(--color-shadow);">OVERLINE_L GEOLOCATION TELEMETRY</span>
+              <h2 id="desktop-map-title" style="font: var(--h2-l);">H2_L Current Location & Waypoint Route</h2>
+              <p style="font: var(--body-m); color: var(--color-shadow);">Body_M Click on waypoints on the wireframe map to review past stops and future destinations.</p>
+            </div>
+
+            <!-- MAP CANVAS MODULE -->
+            <div style="grid-column: span 8;">
+              <div class="map-wireframe">
+                <div class="map-grid-bg"></div>
+
+                <!-- HUD Info -->
+                <div class="map-hud-overlay">
+                  <span style="font: var(--overline-s); color: var(--color-shadow);">HUD Telemetry</span>
+                  <div style="font: var(--h6-l); margin-top: 4px;" id="mapHudLocation">Kyoto Old City Center</div>
+                  <div style="font: var(--caption); color: var(--color-shadow);" id="mapHudCoords">35.0116° N, 135.7681° E</div>
+                </div>
+
+                <!-- Map Pins -->
+                <button class="map-pin" style="top: 35%; left: 20%;" onclick="updateMapPin('Tokyo', 'Visited Day 1-3. Visited Shibuya Sky & Asakusa Sensoji.', '35.6762° N, 139.6503° E')">1</button>
+                <button class="map-pin" style="top: 50%; left: 40%;" onclick="updateMapPin('Mount Fuji', 'Visited Day 4-6. Five Lakes viewpoint trek completed.', '35.3606° N, 138.7274° E')">2</button>
+                <button class="map-pin active current-location" style="top: 60%; left: 60%;" onclick="updateMapPin('Kyoto (Current)', 'Active Location: Exploring Fushimi Inari and Gion district.', '35.0116° N, 135.7681° E')">3</button>
+                <button class="map-pin" style="top: 75%; left: 78%;" onclick="updateMapPin('Osaka', 'Upcoming Stop: Dotonbori food tour and Osaka Castle.', '34.6937° N, 135.5023° E')">4</button>
+                <button class="map-pin" style="top: 45%; left: 88%;" onclick="updateMapPin('Nara', 'Upcoming Stop: Todai-ji Temple & Deer Park excursion.', '34.6851° N, 135.8048° E')">5</button>
+              </div>
+            </div>
+
+            <!-- MAP PIN DETAILS SIDEBAR -->
+            <div style="grid-column: span 4;">
+              <div style="background-color: var(--color-cloud); border: 1px solid var(--color-pebble); padding: 24px; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span style="font: var(--overline-s); color: var(--color-shadow);">OVERLINE_S SELECTED WAYPOINT DATA</span>
+                  <h3 style="font: var(--h3-l); margin: 8px 0;" id="sidebarPinTitle">H3_L Kyoto (Current Location)</h3>
+                  <div style="font: var(--caption); color: var(--color-shadow); margin-bottom: 16px;" id="sidebarPinCoords">35.0116° N, 135.7681° E</div>
+                  <p style="font: var(--body-s); color: var(--color-night); margin-bottom: 16px;" id="sidebarPinDesc">Body_S Active Location: Exploring Fushimi Inari Shrine and Gion historic district today. Weather is clear, 21°C.</p>
+
+                  <div style="border-top: 1px solid var(--color-mist); padding-top: 16px;">
+                    <div style="font: var(--overline-s); color: var(--color-shadow); margin-bottom: 8px;">VISITED ATTRACTIONS TODAY</div>
+                    <ul style="font: var(--body-s); list-style: square; padding-left: 20px;">
+                      <li>Fushimi Inari Shrine (Completed 08:30 AM)</li>
+                      <li>Kiyomizu-dera (Completed 01:15 PM)</li>
+                      <li>Pontocho Alley (Planned for 07:30 PM)</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <button class="btn-secondary" onclick="toggleModal(true)" style="margin-top: 24px;">View Kyoto High-Res Photos</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP KEY PHOTOS GALLERY & CAROUSEL MODULE -->
+        <section id="d-photos" style="padding: 32px 0;" aria-labelledby="desktop-photos-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 12; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px;">
+              <div>
+                <span style="font: var(--overline-l); color: var(--color-shadow);">OVERLINE_L TRIP MEDIA REPOSITORY</span>
+                <h2 id="desktop-photos-title" style="font: var(--h2-l);">H2_L Key Vacation Photos & Video Moments</h2>
+              </div>
+              <div class="carousel-nav-bar" style="gap: 8px;">
+                <button class="btn-secondary" onclick="shiftCarousel(-1)">◀ Prev</button>
+                <button class="btn-secondary" onclick="shiftCarousel(1)">Next ▶</button>
+              </div>
+            </div>
+
+            <!-- PHOTO CAROUSEL ITEMS -->
+            <div style="grid-column: span 12;">
+              <div class="photo-gallery-carousel">
+                <div class="carousel-track" id="desktopCarouselTrack">
+                  <!-- Item 1 -->
+                  <div class="wireframe-border" style="background-color: var(--color-white); padding: 16px; cursor: pointer;" onclick="toggleModal(true)">
+                    <div class="media-placeholder" style="height: 240px; margin-bottom: 12px;">
+                      <span class="media-badge">PHOTO PLACEHOLDER</span>
+                      <span class="media-ratio-text">4:3 Aspect Ratio // Wireframe</span>
+                    </div>
+                    <div style="font: var(--overline-s); color: var(--color-shadow);">DAY 8 // KYOTO</div>
+                    <h4 style="font: var(--h4-l); margin: 4px 0 8px;">H4_L Fushimi Inari Gates at Sunrise</h4>
+                    <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Hiking up through 10,000 torii gates before crowds arrived at dawn.</p>
+                  </div>
+
+                  <!-- Item 2 (Video with Play/Pause Requirement) -->
+                  <div class="wireframe-border" style="background-color: var(--color-white); padding: 16px; position: relative;">
+                    <div class="media-placeholder" style="height: 240px; margin-bottom: 12px;">
+                      <span class="media-badge">VIDEO PLACEHOLDER</span>
+                      <span class="media-ratio-text">16:9 Aspect Ratio // Functional Player</span>
+                      <div class="video-controls-overlay">
+                        <button class="btn-video-control" id="desktopVideoToggleBtn" onclick="toggleVideoPlayback('desktopVideoToggleBtn')">▶ Play</button>
+                        <span style="font: var(--caption); align-self: center;" id="desktopVideoStatusText">Paused</span>
+                      </div>
+                    </div>
+                    <div style="font: var(--overline-s); color: var(--color-shadow);">DAY 6 // FUJI REGION</div>
+                    <h4 style="font: var(--h4-l); margin: 4px 0 8px;">H4_L Shinkansen High-Speed Transit Clip</h4>
+                    <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Passing Mount Fuji at 285 km/h on the Tokaido bullet train line.</p>
+                  </div>
+
+                  <!-- Item 3 -->
+                  <div class="wireframe-border" style="background-color: var(--color-white); padding: 16px; cursor: pointer;" onclick="toggleModal(true)">
+                    <div class="media-placeholder" style="height: 240px; margin-bottom: 12px;">
+                      <span class="media-badge">PHOTO PLACEHOLDER</span>
+                      <span class="media-ratio-text">4:3 Aspect Ratio // Wireframe</span>
+                    </div>
+                    <div style="font: var(--overline-s); color: var(--color-shadow);">DAY 4 // HAKONE</div>
+                    <h4 style="font: var(--h4-l); margin: 4px 0 8px;">H4_L Traditional Ryokan Onsen View</h4>
+                    <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Evening mist over the cedar forests of Kanagawa prefecture.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP ATTRACTIONS VISITED & PLANNED -->
+        <section id="d-attractions" style="padding: 32px 0;" aria-labelledby="desktop-attractions-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 12; margin-bottom: 16px;">
+              <span style="font: var(--overline-l); color: var(--color-shadow);">OVERLINE_L CHECKPOINTS LOG</span>
+              <h2 id="desktop-attractions-title" style="font: var(--h2-l);">H2_L Attractions Visited & Upcoming Itinerary</h2>
+            </div>
+
+            <!-- FILTER BUTTONS -->
+            <div style="grid-column: span 12;">
+              <div class="filter-pills" role="tablist">
+                <button class="filter-pill active" onclick="filterAttractions('all', this)">All (8)</button>
+                <button class="filter-pill" onclick="filterAttractions('visited', this)">Visited (5)</button>
+                <button class="filter-pill" onclick="filterAttractions('planned', this)">Upcoming (3)</button>
+              </div>
+            </div>
+
+            <!-- ATTRACTION LIST (12 cols split in 2 columns of 6) -->
+            <div style="grid-column: span 6;" id="attractionColLeft">
+              <div class="attraction-card attraction-item visited">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag visited">Visited • Day 2</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Shibuya Crossing & Sky Observatory</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Tokyo • 47 floors overlooking the iconic scramble intersection.</p>
+                </div>
+              </div>
+
+              <div class="attraction-card attraction-item visited">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag visited">Visited • Day 5</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Chureito Pagoda Fuji Viewpoint</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Fujiyoshida • Climbed 398 steps to overlook Mount Fuji.</p>
+                </div>
+              </div>
+
+              <div class="attraction-card attraction-item visited">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag visited">Visited • Day 8</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Fushimi Inari Taisha Shrine</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Kyoto • Complete 4-kilometer summit mountain trail completed.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="grid-column: span 6;" id="attractionColRight">
+              <div class="attraction-card attraction-item visited">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag visited">Visited • Day 9</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Kinkaku-ji (Golden Pavilion)</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Kyoto • Zen Buddhist temple reflecting over the Kyoko-chi pond.</p>
+                </div>
+              </div>
+
+              <div class="attraction-card attraction-item planned">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag planned">Scheduled • Day 11</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Dotonbori Neon Canal & Food Market</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Osaka • Scheduled street food walking tour for takoyaki & okonomiyaki.</p>
+                </div>
+              </div>
+
+              <div class="attraction-card attraction-item planned">
+                <div class="media-placeholder" style="width: 80px; height: 80px; flex-shrink: 0;">
+                  <span style="font: var(--caption); z-index: 1;">IMG</span>
+                </div>
+                <div style="flex-grow: 1;">
+                  <span class="status-tag planned">Scheduled • Day 12</span>
+                  <h4 style="font: var(--h4-s); margin: 4px 0;">H4_S Nara Deer Park & Great Buddha Hall</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Body_S Nara • Free-roaming sika deer and Todai-ji wooden structure.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP SUBMIT QUESTIONS / SUGGESTIONS SECTION -->
+        <section id="d-suggestions" style="padding: 32px 0 64px;" aria-labelledby="desktop-form-title">
+          <div class="desktop-grid">
+            <div style="grid-column: span 12; margin-bottom: 24px;">
+              <span style="font: var(--overline-l); color: var(--color-shadow);">OVERLINE_L AUDIENCE ENGAGEMENT</span>
+              <h2 id="desktop-form-title" style="font: var(--h2-l);">H2_L Suggest An Attraction Or Ask Taylor A Question</h2>
+              <p style="font: var(--body-m); color: var(--color-shadow);">Body_M Send real-time recommendations for the remaining 5 days of the vacation in Osaka and Tokyo.</p>
+            </div>
+
+            <!-- FORM CONTAINER -->
+            <div style="grid-column: span 7;">
+              <form id="desktopSuggestionForm" onsubmit="handleSuggestionSubmit(event, 'desktop')" class="wireframe-border" style="background-color: var(--color-white); padding: 32px;">
+                <div class="form-group">
+                  <label class="form-label" for="d-type">Submission Category</label>
+                  <select id="d-type" class="wireframe-select">
+                    <option value="suggestion">Attraction or Food Suggestion</option>
+                    <option value="question">Question for Taylor</option>
+                    <option value="gear">Travel Gear / Route Inquiry</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="d-name">Your Full Name or Handle</label>
+                  <input type="text" id="d-name" class="wireframe-input" placeholder="e.g. Jordan Smith">
+                  <span class="form-error-feedback" id="d-name-error">Please provide a valid name.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="d-location">Target City / Stop (Optional)</label>
+                  <input type="text" id="d-location" class="wireframe-input" placeholder="e.g. Osaka Night Markets">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="d-message">Your Tip, Suggestion, or Question</label>
+                  <textarea id="d-message" class="wireframe-textarea" rows="4" placeholder="e.g. Try the hidden matcha shop right behind Nanzen-ji temple!"></textarea>
+                  <span class="form-error-feedback" id="d-message-error">Please type a message or recommendation.</span>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                  Button_L Submit Recommendation To Traveler
+                </button>
+
+                <div class="submission-feedback" id="desktopFeedbackToast">
+                  <div style="font: var(--subhead-s);">✓ Suggestion Received!</div>
+                  <div style="font: var(--body-s); color: var(--color-mist); margin-top: 4px;">Thank you! Your recommendation has been added to Taylor's trip ledger.</div>
+                </div>
+              </form>
+            </div>
+
+            <!-- FEED OF PREVIOUS COMMUNITY SUGGESTIONS -->
+            <div style="grid-column: span 5;">
+              <div style="background-color: var(--color-cloud); border: 1px solid var(--color-mist); padding: 24px; height: 100%;">
+                <span style="font: var(--overline-s); color: var(--color-shadow);">COMMUNITY INPUT FEED (RECENT)</span>
+                <h3 style="font: var(--h3-l); margin: 8px 0 16px;">H3_L What Others Suggested</h3>
+
+                <div id="desktopSuggestionsFeed">
+                  <div style="background-color: var(--color-white); border: 1px solid var(--color-mist); padding: 16px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span style="font: var(--overline-s); color: var(--color-shadow);">MARK T. • QUESTION</span>
+                      <span style="font: var(--caption); color: var(--color-pebble);">2 hrs ago</span>
+                    </div>
+                    <div style="font: var(--body-s); margin-top: 8px;">"Did you need advance reservations for the Shinkansen luggage storage slots?"</div>
+                    <div style="font: var(--caption); color: var(--color-shadow); margin-top: 6px;">Taylor's Answer: "Yes, reserved oversized baggage section online!"</div>
+                  </div>
+
+                  <div style="background-color: var(--color-white); border: 1px solid var(--color-mist); padding: 16px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span style="font: var(--overline-s); color: var(--color-shadow);">CLARA W. • SUGGESTION</span>
+                      <span style="font: var(--caption); color: var(--color-pebble);">5 hrs ago</span>
+                    </div>
+                    <div style="font: var(--body-s); margin-top: 8px;">"In Osaka, make sure to visit teamLab Botanical Garden at night, totally worth it!"</div>
+                    <div style="font: var(--caption); color: var(--color-shadow); margin-top: 6px;">Status: Added to Day 11 Wishlist</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESKTOP FOOTER -->
+        <footer class="wireframe-footer">
+          <div class="desktop-grid">
+            <div class="footer-content" style="grid-column: span 12;">
+              <div>
+                <div style="font: var(--h4-s);">TripTracker // VACATION PROTOTYPE</div>
+                <div style="font: var(--footer-links); color: var(--color-shadow); margin-top: 4px;">Designed to 1536px Desktop Token Specification</div>
+              </div>
+              <ul class="footer-links-list">
+                <li><a href="#privacy">Footer_Links Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Route Sharing</a></li>
+                <li><a href="#rss">RSS Coordinates Feed</a></li>
+                <li><a href="#contact">Emergency Contact Hub</a></li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. MOBILE VIEWPORT (390px, 4/2 COLUMNS)    -->
+    <!-- ========================================== -->
+    <div class="viewport-section" id="section-mobile">
+      <div class="viewport-label-indicator">Viewport Specification: Mobile (390px) | 4-Column Grid | 17px Margin</div>
+
+      <div class="mobile-frame">
+        <!-- MOBILE NAVIGATION DRAWER OVERLAY -->
+        <div class="mobile-nav-drawer" id="mobileDrawer" aria-label="Mobile Menu Drawer">
+          <div class="drawer-header">
+            <div style="font: var(--h4-s);">TRIP MENU</div>
+            <button class="btn-secondary" onclick="toggleMobileDrawer(false)" aria-label="Close Mobile Drawer">✕ Close</button>
+          </div>
+          <ul class="drawer-links">
+            <li><a href="#m-progress" onclick="toggleMobileDrawer(false)">Trip Progress Bar</a></li>
+            <li><a href="#m-map" onclick="toggleMobileDrawer(false)">Interactive Map</a></li>
+            <li><a href="#m-photos" onclick="toggleMobileDrawer(false)">Key Photos Carousel</a></li>
+            <li><a href="#m-attractions" onclick="toggleMobileDrawer(false)">Attractions Visited</a></li>
+            <li><a href="#m-suggestions" onclick="toggleMobileDrawer(false)">Submit Question / Tip</a></li>
+            <li style="border-top: 1px solid var(--color-mist); padding-top: 16px;">
+              <a href="#share" onclick="toggleMobileDrawer(false)">Share Live Link</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- MOBILE HEADER WITH HAMBURGER -->
+        <header class="mobile-header">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font: var(--h4-s); text-transform: uppercase;">TripTracker</div>
+              <button class="hamburger-btn" onclick="toggleMobileDrawer(true)" aria-label="Open Mobile Menu Drawer">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- MOBILE HERO / TITLE -->
+        <section style="padding: 24px 0 16px;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <span style="font: var(--overline-s); color: var(--color-shadow); display: block; margin-bottom: 6px;">OVERLINE_S LIVE EXPEDITION</span>
+              <h1 style="font: var(--h1-s); margin-bottom: 12px;">H1_S Taylor's Vacation Tracker</h1>
+              <p style="font: var(--intro-s); color: var(--color-shadow); margin-bottom: 16px;">Intro_S Currently exploring Kyoto: Day 9 of 14.</p>
+
+              <div style="background-color: var(--color-cloud); border: 1px solid var(--color-mist); padding: 16px;">
+                <span style="font: var(--overline-s); color: var(--color-shadow);">CURRENT MILESTONE</span>
+                <div style="display: flex; align-items: baseline; gap: 8px; margin: 4px 0;">
+                  <span style="font: var(--numeral-s);">09</span>
+                  <span style="font: var(--subhead-s);">/ 14 Days</span>
+                </div>
+                <div style="font: var(--caption); color: var(--color-shadow);">Last Ping: 12m ago • Kyoto Center</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE TRIP PROGRESS BAR MODULE -->
+        <section id="m-progress" style="padding: 12px 0;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <div class="wireframe-border" style="background-color: var(--color-cloud); padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+                  <div>
+                    <span style="font: var(--overline-s); color: var(--color-shadow);">PROGRESS</span>
+                    <h2 style="font: var(--h2-s);">H2_S Day 9 Progress</h2>
+                  </div>
+                  <span style="font: var(--subhead-s);" id="mobileProgressPercent">64%</span>
+                </div>
+
+                <div class="progress-track" style="height: 10px;">
+                  <div class="progress-fill" id="mobileProgressBar" style="width: 64%;"></div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; font: var(--overline-s); color: var(--color-shadow);">
+                  <span>Tokyo (Done)</span>
+                  <span>Kyoto (Active)</span>
+                  <span>Osaka (Next)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE MAP SECTION -->
+        <section id="m-map" style="padding: 24px 0;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <span style="font: var(--overline-s); color: var(--color-shadow);">MAP TRACKER</span>
+              <h2 style="font: var(--h2-s); margin-bottom: 12px;">H2_S Current GPS Map</h2>
+
+              <div class="map-wireframe" style="height: 280px;">
+                <div class="map-grid-bg"></div>
+
+                <div class="map-hud-overlay" style="padding: 8px 12px; max-width: 200px;">
+                  <div style="font: var(--overline-s); color: var(--color-shadow);">Active Pin</div>
+                  <div style="font: var(--h6-s);" id="mobileMapTitle">Kyoto Center</div>
+                </div>
+
+                <button class="map-pin" style="top: 35%; left: 25%;" onclick="updateMobileMap('Tokyo', 'Day 1-3 Completed')">1</button>
+                <button class="map-pin" style="top: 50%; left: 45%;" onclick="updateMobileMap('Fuji', 'Day 4-6 Completed')">2</button>
+                <button class="map-pin active current-location" style="top: 65%; left: 65%;" onclick="updateMobileMap('Kyoto (Live)', 'Active Day 9: Exploring')">3</button>
+                <button class="map-pin" style="top: 80%; left: 85%;" onclick="updateMobileMap('Osaka', 'Upcoming Day 11')">4</button>
+              </div>
+
+              <div style="background-color: var(--color-cloud); border: 1px solid var(--color-mist); padding: 12px; margin-top: 8px;">
+                <div style="font: var(--caption); color: var(--color-night);" id="mobileMapDesc">Currently at Kyoto Central (35.0116° N, 135.7681° E). Fushimi Inari visited.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE KEY PHOTOS CAROUSEL -->
+        <section id="m-photos" style="padding: 24px 0;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
+                <div>
+                  <span style="font: var(--overline-s); color: var(--color-shadow);">HIGHLIGHTS</span>
+                  <h2 style="font: var(--h2-s);">H2_S Key Photos</h2>
+                </div>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn-secondary" style="padding: 6px 10px;" onclick="shiftMobilePhoto(-1)">◀</button>
+                  <button class="btn-secondary" style="padding: 6px 10px;" onclick="shiftMobilePhoto(1)">▶</button>
+                </div>
+              </div>
+
+              <!-- SINGLE CARD AT A TIME IN MOBILE -->
+              <div class="wireframe-border" style="background-color: var(--color-white); padding: 14px;" id="mobilePhotoCard">
+                <div class="media-placeholder" style="height: 200px; margin-bottom: 10px;" onclick="toggleModal(true)">
+                  <span class="media-badge">PHOTO (TAP TO EXPAND)</span>
+                  <span class="media-ratio-text">4:3 Wireframe</span>
+                </div>
+                <span style="font: var(--overline-s); color: var(--color-shadow);" id="mPhotoDate">DAY 8 // KYOTO</span>
+                <h4 style="font: var(--h4-s); margin: 4px 0 6px;" id="mPhotoTitle">H4_S Fushimi Inari Gates</h4>
+                <p style="font: var(--body-s); color: var(--color-shadow);" id="mPhotoDesc">Body_S Morning hike through the torii shrines at dawn.</p>
+              </div>
+
+              <!-- VIDEO CONTROL COMPONENT (Mobile) -->
+              <div class="wireframe-border" style="background-color: var(--color-cloud); padding: 14px; margin-top: 12px; position: relative;">
+                <div class="media-placeholder" style="height: 160px; margin-bottom: 8px;">
+                  <span class="media-badge">VIDEO CLIP</span>
+                  <span class="media-ratio-text">16:9 Aspect Ratio</span>
+                  <div class="video-controls-overlay">
+                    <button class="btn-video-control" id="mobileVideoToggleBtn" onclick="toggleVideoPlayback('mobileVideoToggleBtn')">▶ Play</button>
+                    <span style="font: var(--caption); align-self: center;" id="mobileVideoStatusText">Paused</span>
+                  </div>
+                </div>
+                <h5 style="font: var(--h5-s);">H5_S Shinkansen Bullet Train Video</h5>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE ATTRACTIONS LIST -->
+        <section id="m-attractions" style="padding: 24px 0;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <span style="font: var(--overline-s); color: var(--color-shadow);">CHECKPOINTS</span>
+              <h2 style="font: var(--h2-s); margin-bottom: 12px;">H2_S Attractions Visited</h2>
+
+              <div class="filter-pills" style="margin-bottom: 12px;">
+                <button class="filter-pill active" style="padding: 6px 10px; font: var(--button-s);" onclick="filterMobileAttractions('all', this)">All</button>
+                <button class="filter-pill" style="padding: 6px 10px; font: var(--button-s);" onclick="filterMobileAttractions('visited', this)">Visited</button>
+                <button class="filter-pill" style="padding: 6px 10px; font: var(--button-s);" onclick="filterMobileAttractions('planned', this)">Upcoming</button>
+              </div>
+
+              <div id="mobileAttractionsList">
+                <div class="attraction-card m-attraction-item visited" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span class="status-tag visited">Visited</span>
+                    <span style="font: var(--caption); color: var(--color-shadow);">Day 2</span>
+                  </div>
+                  <h4 style="font: var(--h4-s);">H4_S Shibuya Crossing</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Tokyo viewpoint completed.</p>
+                </div>
+
+                <div class="attraction-card m-attraction-item visited" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span class="status-tag visited">Visited</span>
+                    <span style="font: var(--caption); color: var(--color-shadow);">Day 8</span>
+                  </div>
+                  <h4 style="font: var(--h4-s);">H4_S Fushimi Inari Taisha</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Kyoto summit completed.</p>
+                </div>
+
+                <div class="attraction-card m-attraction-item planned" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                  <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span class="status-tag planned">Scheduled</span>
+                    <span style="font: var(--caption); color: var(--color-shadow);">Day 11</span>
+                  </div>
+                  <h4 style="font: var(--h4-s);">H4_S Dotonbori Canal Food</h4>
+                  <p style="font: var(--body-s); color: var(--color-shadow);">Osaka evening food tour planned.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE SUBMISSION FORM -->
+        <section id="m-suggestions" style="padding: 24px 0 40px;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4;">
+              <span style="font: var(--overline-s); color: var(--color-shadow);">RECOMMENDATIONS</span>
+              <h2 style="font: var(--h2-s); margin-bottom: 12px;">H2_S Send Tip or Question</h2>
+
+              <form id="mobileSuggestionForm" onsubmit="handleSuggestionSubmit(event, 'mobile')" class="wireframe-border" style="background-color: var(--color-white); padding: 16px;">
+                <div class="form-group">
+                  <label class="form-label" for="m-name">Your Name</label>
+                  <input type="text" id="m-name" class="wireframe-input" placeholder="e.g. Alex" style="font: var(--body-s);">
+                  <span class="form-error-feedback" id="m-name-error">Name is required.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="m-message">Suggestion for Remaining Days</label>
+                  <textarea id="m-message" class="wireframe-textarea" rows="3" placeholder="e.g. Visit the Osaka Castle gardens!" style="font: var(--body-s);"></textarea>
+                  <span class="form-error-feedback" id="m-message-error">Please type a recommendation.</span>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; font: var(--button-s);">
+                  Button_S Send Suggestion
+                </button>
+
+                <div class="submission-feedback" id="mobileFeedbackToast">
+                  <div style="font: var(--subhead-s);">✓ Sent!</div>
+                  <div style="font: var(--body-s); color: var(--color-mist);">Tip submitted to Taylor.</div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOBILE FOOTER -->
+        <footer style="background-color: var(--color-cloud); border-top: 1px solid var(--color-mist); padding: 24px 0;">
+          <div class="mobile-grid">
+            <div style="grid-column: span 4; text-align: center;">
+              <div style="font: var(--h6-s);">TripTracker Mobile // 390px</div>
+              <div style="font: var(--footer-links); color: var(--color-shadow); margin-top: 8px;">
+                <a href="#top" style="color: var(--color-night); text-decoration: none;">Back to top ↑</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 3. ACTIVE MODAL / OVERLAY STATE (LIGHTBOX)  -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="photoModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" onclick="toggleModal(false)" aria-label="Close Modal Dialog">✕ Close</button>
+      <span style="font: var(--overline-s); color: var(--color-shadow);">MODAL ACTIVE STATE // PHOTO INSPECTION</span>
+      <h3 id="modalHeading" style="font: var(--h3-l); margin: 8px 0 16px;">H3_L Fushimi Inari Torii Path at 06:15 AM</h3>
+
+      <div class="media-placeholder" style="height: 360px; margin-bottom: 20px;">
+        <span class="media-badge">EXPANDED HIGH-RES MEDIA PLACEHOLDER</span>
+        <span class="media-ratio-text">16:9 Wireframe Bounding Box • Tagged Kyoto_083.raw</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--color-mist); padding-top: 16px;">
+        <div>
+          <div style="font: var(--overline-s); color: var(--color-shadow);">CAMERA TELEMETRY</div>
+          <div style="font: var(--caption); color: var(--color-night);">ISO 200 • 35mm • f/2.8 • 1/500s</div>
+        </div>
+        <div>
+          <button class="btn-secondary" onclick="toggleModal(false)">Back To Map View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    /* Viewport switcher logic */
+    function switchView(mode) {
+      const desktopSec = document.getElementById('section-desktop');
+      const mobileSec = document.getElementById('section-mobile');
+      const buttons = document.querySelectorAll('.btn-toggle-view');
+
+      buttons.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (mode === 'desktop') {
+        desktopSec.style.display = 'flex';
+        mobileSec.style.display = 'none';
+      } else if (mode === 'mobile') {
+        desktopSec.style.display = 'none';
+        mobileSec.style.display = 'flex';
+      } else {
+        desktopSec.style.display = 'flex';
+        mobileSec.style.display = 'flex';
+      }
+    }
+
+    /* Modal open/close */
+    function toggleModal(open) {
+      const modal = document.getElementById('photoModalOverlay');
+      if (open) {
+        modal.classList.add('active');
+      } else {
+        modal.classList.remove('active');
+      }
+    }
+
+    /* Desktop dropdown */
+    function toggleDropdown() {
+      const dropdown = document.getElementById('desktopDropdownMenu');
+      dropdown.classList.toggle('open');
+    }
+
+    /* Mobile drawer open/close */
+    function toggleMobileDrawer(open) {
+      const drawer = document.getElementById('mobileDrawer');
+      if (open) {
+        drawer.classList.add('open');
+      } else {
+        drawer.classList.remove('open');
+      }
+    }
+
+    /* Video Play / Pause accessibility toggle */
+    function toggleVideoPlayback(btnId) {
+      const btn = document.getElementById(btnId);
+      const isDesktop = btnId.includes('desktop');
+      const label = document.getElementById(isDesktop ? 'desktopVideoStatusText' : 'mobileVideoStatusText');
+
+      if (btn.innerText.includes('Play')) {
+        btn.innerText = '❚❚ Pause';
+        label.innerText = 'Playing (Simulated)';
+      } else {
+        btn.innerText = '▶ Play';
+        label.innerText = 'Paused';
+      }
+    }
+
+    /* Trip Progress scrubber */
+    function setTripProgress(percent, stopName) {
+      document.getElementById('desktopProgressBar').style.width = percent + '%';
+      document.getElementById('desktopProgressPercent').innerText = percent + '%';
+      document.getElementById('mobileProgressBar').style.width = percent + '%';
+      document.getElementById('mobileProgressPercent').innerText = percent + '%';
+      
+      const hudLoc = document.getElementById('mapHudLocation');
+      if (hudLoc) hudLoc.innerText = stopName + ' (Selected)';
+    }
+
+    /* Map Pin selection */
+    function updateMapPin(name, desc, coords) {
+      document.getElementById('sidebarPinTitle').innerText = 'H3_L ' + name;
+      document.getElementById('sidebarPinDesc').innerText = 'Body_S ' + desc;
+      document.getElementById('sidebarPinCoords').innerText = coords;
+      document.getElementById('mapHudLocation').innerText = name;
+      document.getElementById('mapHudCoords').innerText = coords;
+    }
+
+    function updateMobileMap(name, desc) {
+      document.getElementById('mobileMapTitle').innerText = name;
+      document.getElementById('mobileMapDesc').innerText = desc;
+    }
+
+    /* Desktop Carousel controls */
+    let carouselOffset = 0;
+    function shiftCarousel(direction) {
+      const track = document.getElementById('desktopCarouselTrack');
+      carouselOffset = (carouselOffset + direction + 3) % 3;
+      track.style.opacity = '0.5';
+      setTimeout(() => {
+        track.style.opacity = '1';
+      }, 150);
+    }
+
+    /* Mobile Photo carousel */
+    const mobilePhotos = [
+      { date: 'DAY 8 // KYOTO', title: 'H4_S Fushimi Inari Gates', desc: 'Body_S Morning hike through 10,000 torii gates.' },
+      { date: 'DAY 5 // FUJI', title: 'H4_S Chureito Pagoda View', desc: 'Body_S Overlooking snow-capped volcano peak.' },
+      { date: 'DAY 2 // TOKYO', title: 'H4_S Asakusa Sensoji Temple', desc: 'Body_S Evening lantern ritual and market stroll.' }
+    ];
+    let mobilePhotoIdx = 0;
+
+    function shiftMobilePhoto(dir) {
+      mobilePhotoIdx = (mobilePhotoIdx + dir + mobilePhotos.length) % mobilePhotos.length;
+      const cur = mobilePhotos[mobilePhotoIdx];
+      document.getElementById('mPhotoDate').innerText = cur.date;
+      document.getElementById('mPhotoTitle').innerText = cur.title;
+      document.getElementById('mPhotoDesc').innerText = cur.desc;
+    }
+
+    /* Attraction list filter */
+    function filterAttractions(type, pillEl) {
+      const pills = pillEl.parentElement.querySelectorAll('.filter-pill');
+      pills.forEach(p => p.classList.remove('active'));
+      pillEl.classList.add('active');
+
+      const items = document.querySelectorAll('.attraction-item');
+      items.forEach(item => {
+        if (type === 'all') {
+          item.style.display = 'flex';
+        } else if (item.classList.contains(type)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function filterMobileAttractions(type, pillEl) {
+      const pills = pillEl.parentElement.querySelectorAll('.filter-pill');
+      pills.forEach(p => p.classList.remove('active'));
+      pillEl.classList.add('active');
+
+      const items = document.querySelectorAll('.m-attraction-item');
+      items.forEach(item => {
+        if (type === 'all') {
+          item.style.display = 'flex';
+        } else if (item.classList.contains(type)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    /* Form submission & micro-interactions */
+    function handleSuggestionSubmit(event, platform) {
+      event.preventDefault();
+      let nameInput, msgInput, nameErr, msgErr, toast;
+
+      if (platform === 'desktop') {
+        nameInput = document.getElementById('d-name');
+        msgInput = document.getElementById('d-message');
+        nameErr = document.getElementById('d-name-error');
+        msgErr = document.getElementById('d-message-error');
+        toast = document.getElementById('desktopFeedbackToast');
+      } else {
+        nameInput = document.getElementById('m-name');
+        msgInput = document.getElementById('m-message');
+        nameErr = document.getElementById('m-name-error');
+        msgErr = document.getElementById('m-message-error');
+        toast = document.getElementById('mobileFeedbackToast');
+      }
+
+      let valid = true;
+      if (!nameInput.value.trim()) {
+        nameInput.classList.add('state-error');
+        nameErr.classList.add('visible');
+        valid = false;
+      } else {
+        nameInput.classList.remove('state-error');
+        nameErr.classList.remove('visible');
+      }
+
+      if (!msgInput.value.trim()) {
+        msgInput.classList.add('state-error');
+        msgErr.classList.add('visible');
+        valid = false;
+      } else {
+        msgInput.classList.remove('state-error');
+        msgErr.classList.remove('visible');
+      }
+
+      if (valid) {
+        toast.classList.add('visible');
+
+        /* If desktop, append real-time card to feed */
+        if (platform === 'desktop') {
+          const feed = document.getElementById('desktopSuggestionsFeed');
+          const newCard = document.createElement('div');
+          newCard.style.cssText = 'background-color: var(--color-white); border: 1px solid var(--color-night); padding: 16px; margin-bottom: 12px;';
+          newCard.innerHTML = `
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font: var(--overline-s); color: var(--color-night); font-weight: bold;">${nameInput.value.toUpperCase()} • JUST NOW</span>
+              <span style="font: var(--caption); color: var(--color-pebble);">New</span>
+            </div>
+            <div style="font: var(--body-s); margin-top: 8px;">"${msgInput.value}"</div>
+            <div style="font: var(--caption); color: var(--color-shadow); margin-top: 6px;">Status: Transmitted to Traveler Device</div>
+          `;
+          feed.prepend(newCard);
+        }
+
+        nameInput.value = '';
+        msgInput.value = '';
+        setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 5000);
+      }
+    }
+
+    /* Close modal with ESC key */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        toggleModal(false);
+        toggleMobileDrawer(false);
+      }
+    });
+  </script>
+</body>
+</html>
